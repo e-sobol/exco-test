@@ -14,11 +14,11 @@ const (
 	maxConcurrentReq = 10
 )
 
-func handleFetchUrlRequest(request UrlFetchRequest) []UrlFetchResult {
+func handleFetchUrlRequest(baseCtx context.Context, request UrlFetchRequest) []UrlFetchResult {
 	globalTimeout := UnwrapPointerOrDefault(request.ExecutionTimeout, defaultTimeoutMs)
 	responses := make([]UrlFetchResult, len(request.UrlRequests))
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(globalTimeout)*time.Millisecond)
+	ctx, cancel := context.WithTimeout(baseCtx, time.Duration(globalTimeout)*time.Millisecond)
 	defer cancel()
 
 	sem := make(chan struct{}, maxConcurrentReq)

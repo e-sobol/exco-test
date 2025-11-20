@@ -13,7 +13,7 @@ func ExecuteHandler(ctx *gin.Context) {
 		return
 	}
 
-	results := handleFetchUrlRequest(urlFetchRequest)
+	results := handleFetchUrlRequest(ctx, urlFetchRequest)
 
 	ctx.JSON(http.StatusOK, UrlFetchResponse{Results: results})
 }
